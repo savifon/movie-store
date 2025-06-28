@@ -15,7 +15,7 @@ function getMovieGenres(movie) {
   return movieGenresData.map((genre) => genre.name)
 }
 
-function isFavorite(movie) {
+function handleIsFavorite(movie) {
   return store.getters['favorites/isFavorite'](movie.id)
 }
 
@@ -39,7 +39,7 @@ onMounted(async () => {
       v-for="movie in movies"
       :key="movie.id"
       :movie="movie"
-      :is-favorite="isFavorite(movie)"
+      :is-favorite="handleIsFavorite(movie)"
       :genres="getMovieGenres(movie)"
       @add-to-cart="handleAddToCart"
       @toggle-favorite="handleToggleFavorite"

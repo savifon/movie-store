@@ -2,6 +2,7 @@
 import { formatDate, formatPrice } from '@/utils/formats'
 import { HeartIcon, StarIcon } from '@heroicons/vue/24/solid'
 import { computed } from 'vue'
+import { useStore } from 'vuex'
 import ButtonBase from '@/components/forms/ButtonBase.vue'
 import TooltipBase from '@/components/ui/TooltipBase.vue'
 
@@ -20,6 +21,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['add-to-cart', 'toggle-favorite'])
 
+const store = useStore()
+
 const totalGenres = computed(() => props.genres.length)
 const formattedGenres = computed(() =>
   totalGenres.value > 1
@@ -27,6 +30,7 @@ const formattedGenres = computed(() =>
     : props.genres[0],
 )
 const allGenres = computed(() => (totalGenres.value > 1 ? props.genres.join(', ') : null))
+const movieIsAdded = computed(() => store.getters['cart/movieIsAdded'](props.movie.id))
 
 function handleAddToCart(movie) {
   emit('add-to-cart', movie)
@@ -52,7 +56,11 @@ const movieBackdrop = computed(
       ></div>
       <div class="w-full absolute top-2 right-2 flex justify-end">
         <TooltipBase :content="`${isFavorite ? 'Remover d' : 'Adicionar a'}os favoritos`">
-          <button type="button" @click="handleToggleFavorite(movie)">
+          <button
+            type="button"
+            class="cursor-pointer"
+            @click="handleToggleFavorite(movie)"
+          >
             <HeartIcon
               :class="[
                 'size-8',
@@ -87,6 +95,12 @@ const movieBackdrop = computed(
       </div>
       <p class="text-lg">{{ formatPrice(movie.popularity) }}</p>
     </div>
-    <ButtonBase text="Adicionar" type="button" @click="handleAddToCart(movie)" />
+    <ButtonBase
+      :text="movieIsAdded ? 'Adicionado' : 'Adicionar'"
+      type="button"
+      class="rounded-t-none"
+      :disabled="movieIsAdded"
+      @click="handleAddToCart(movie)"
+    />
   </div>
 </template>

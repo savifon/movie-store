@@ -13,6 +13,7 @@ export default {
   namespaced: true,
   state: () => ({
     items: loadFromStorage(),
+    isOpen: false,
   }),
   mutations: {
     ADD_TO_CART(state, movie) {
@@ -23,6 +24,16 @@ export default {
       state.items = state.items.filter((item) => item.id !== id)
       saveToStorage(state.items)
     },
+    CLEAR_CART(state) {
+      state.items = []
+      saveToStorage(state.items)
+    },
+    OPEN_CART(state) {
+      state.isOpen = true
+    },
+    CLOSE_CART(state) {
+      state.isOpen = false
+    },
   },
   actions: {
     addToCart({ commit }, movie) {
@@ -31,9 +42,25 @@ export default {
     removeFromCart({ commit }, id) {
       commit('REMOVE_FROM_CART', id)
     },
+    clearCart({ commit }) {
+      commit('CLEAR_CART')
+    },
+    openCart({ commit }) {
+      commit('OPEN_CART')
+    },
+    closeCart({ commit }) {
+      commit('CLOSE_CART')
+    },
   },
   getters: {
+    cartIsOpen: (state) => state.isOpen,
     cartItems: (state) => state.items,
     cartCount: (state) => state.items.length,
+    cartTotalPrice: (state) => {
+      return state.items.reduce((total, item) => {
+        return total + (item.popularity || 0)
+      }, 0)
+    },
+    movieIsAdded: (state) => (id) => state.items.some((p) => p.id === id),
   },
 }

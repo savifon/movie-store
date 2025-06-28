@@ -8,7 +8,7 @@ defineProps({
 <template>
   <button
     type="button"
-    class="w-full text-lg font-medium bg-lime-600 hover:bg-lime-800 text-shadow-neutral-900 py-3 px-6 transition-all"
+    class="w-full cursor-pointer rounded-sm text-lg font-medium bg-lime-600 hover:bg-lime-800 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-6 transition-all"
   >
     {{ text }}
   </button>

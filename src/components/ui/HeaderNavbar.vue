@@ -1,5 +1,15 @@
 <script setup lang="js">
 import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/vue/24/solid'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import CartContent from '@/components/cart/CartContent.vue'
+
+const store = useStore()
+const cartCount = computed(() => store.getters['cart/cartCount'])
+
+function handleOpenCart() {
+  store.dispatch('cart/openCart')
+}
 </script>
 
 <template>
@@ -8,6 +18,7 @@ import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/vue
       <RouterLink to="/" class="text-lime-500 font-bold text-2xl tracking-wide">
         MOVIE STORE
       </RouterLink>
+
       <label class="flex items-center rounded-sm bg-neutral-800 border-2 border-lime-500">
         <input
           type="search"
@@ -16,10 +27,26 @@ import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/vue
         />
         <MagnifyingGlassIcon class="fill-lime-300 size-8 mr-3" />
       </label>
+
       <div class="flex items-center justify-end gap-4">
-        <HeartIcon class="fill-lime-500 size-10" />
-        <ShoppingCartIcon class="fill-lime-500 size-10" />
+        <button class="group relative cursor-pointer">
+          <HeartIcon
+            class="size-10 fill-lime-500 group-hover:fill-lime-300 transition-all"
+          />
+        </button>
+        <button class="group relative cursor-pointer" @click="handleOpenCart">
+          <ShoppingCartIcon
+            class="size-10 fill-lime-500 group-hover:fill-lime-300 transition-all"
+          />
+          <span
+            class="absolute -top-2 -right-2 bg-neutral-200 text-neutral-800 rounded-full size-6"
+          >
+            {{ cartCount }}
+          </span>
+        </button>
       </div>
     </div>
   </header>
+
+  <CartContent />
 </template>
