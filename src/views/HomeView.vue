@@ -1,7 +1,7 @@
 <script setup lang="js">
-import ProductList from '@/components/product/ProductList.vue'
+import MovieList from '@/components/movies/MovieList.vue'
 </script>
 
 <template>
-  <ProductList />
+  <MovieList />
 </template>
