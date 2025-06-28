@@ -3,6 +3,7 @@ import { formatDate, formatPrice } from '@/utils/formats'
 import { HeartIcon, StarIcon } from '@heroicons/vue/24/solid'
 import { computed } from 'vue'
 import ButtonBase from '@/components/forms/ButtonBase.vue'
+import TooltipBase from '@/components/ui/TooltipBase.vue'
 
 const props = defineProps({
   isFavorite: Boolean,
@@ -19,17 +20,20 @@ const props = defineProps({
 })
 const emit = defineEmits(['add-to-cart', 'toggle-favorite'])
 
+const totalGenres = computed(() => props.genres.length)
+const formattedGenres = computed(() =>
+  totalGenres.value > 1
+    ? `${props.genres[0]} +${totalGenres.value - 1}`
+    : props.genres[0],
+)
+const allGenres = computed(() => (totalGenres.value > 1 ? props.genres.join(', ') : null))
+
 function handleAddToCart(movie) {
   emit('add-to-cart', movie)
 }
 
 function handleToggleFavorite(movie) {
   emit('toggle-favorite', movie)
-}
-
-function getFormattedGenres(genres) {
-  const total_genres = genres.length
-  return `${genres[0]} +${total_genres - 1}`
 }
 
 const movieBackdrop = computed(
@@ -46,15 +50,18 @@ const movieBackdrop = computed(
         class="aspect-[2/2.3] bg-cover group-hover:scale-[1.1] bg-center transition-all"
         :style="{ backgroundImage: `url(${movieBackdrop})` }"
       ></div>
-      <button
-        type="button"
-        class="absolute top-2 right-2 size-8"
-        @click="handleToggleFavorite(movie)"
-      >
-        <HeartIcon
-          :class="[isFavorite ? 'fill-lime-600' : 'stroke-lime-600/50 fill-transparent']"
-        />
-      </button>
+      <div class="w-full absolute top-2 right-2 flex justify-end">
+        <TooltipBase :content="`${isFavorite ? 'Remover d' : 'Adicionar a'}os favoritos`">
+          <button type="button" @click="handleToggleFavorite(movie)">
+            <HeartIcon
+              :class="[
+                'size-8',
+                isFavorite ? 'fill-lime-600' : 'stroke-lime-600/50 fill-transparent',
+              ]"
+            />
+          </button>
+        </TooltipBase>
+      </div>
       <div
         class="absolute bottom-0 pb-2 pt-4 w-full text-sm text-center bg-linear-to-t from-neutral-950/80 to-transparent"
       >
@@ -74,7 +81,9 @@ const movieBackdrop = computed(
             {{ Math.trunc(movie.vote_average) }}
           </p>
         </div>
-        <p class="text-neutral-500 text-sm">{{ getFormattedGenres(genres) }}</p>
+        <TooltipBase :content="allGenres">
+          <p class="text-neutral-500 text-sm cursor-default">{{ formattedGenres }}</p>
+        </TooltipBase>
       </div>
       <p class="text-lg">{{ formatPrice(movie.popularity) }}</p>
     </div>

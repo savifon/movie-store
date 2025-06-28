@@ -20,9 +20,7 @@ export default {
     },
     stopLoading({ commit }) {
       console.log('aquiii')
-      setTimeout(() => {
-        commit('STOP_LOADING')
-      }, 5000)
+      commit('STOP_LOADING')
     },
     stopAllLoadings({ commit }) {
       commit('STOP_ALL_LOADINGS')
