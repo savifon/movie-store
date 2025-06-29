@@ -19,7 +19,6 @@ export default {
       commit('START_LOADING')
     },
     stopLoading({ commit }) {
-      console.log('aquiii')
       commit('STOP_LOADING')
     },
     stopAllLoadings({ commit }) {
