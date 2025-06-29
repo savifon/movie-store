@@ -1,6 +1,7 @@
 <script setup lang="js">
 import TooltipBase from '@/components/ui/TooltipBase.vue'
-import { watch } from 'vue'
+import ModalConfirm from '@/components/ui/ModalConfirm.vue'
+import { ref, watch } from 'vue'
 
 defineProps({
   title: String,
@@ -9,14 +10,20 @@ defineProps({
 
 const emit = defineEmits(['clear'])
 const isOpen = defineModel()
+const isModalConfirmOpen = ref(false)
 
 function handleClear() {
+  isModalConfirmOpen.value = false
   emit('clear')
   closeSidebar()
 }
 
 function closeSidebar() {
   isOpen.value = false
+}
+
+function handleOpenModalConfirm() {
+  isModalConfirmOpen.value = true
 }
 
 watch(isOpen, () => {
@@ -66,7 +73,7 @@ watch(isOpen, () => {
               <button
                 v-if="itemCount > 0"
                 class="cursor-pointer text-sm border-b border-lime-600 text-lime-600"
-                @click="handleClear"
+                @click="handleOpenModalConfirm"
               >
                 Esvaziar
               </button>
@@ -78,4 +85,10 @@ watch(isOpen, () => {
       </div>
     </Transition>
   </div>
+
+  <ModalConfirm
+    v-model="isModalConfirmOpen"
+    @confirm="handleClear"
+    @cancel="isModalConfirmOpen = false"
+  />
 </template>

@@ -1,9 +1,11 @@
 <script setup lang="js">
 import TooltipBase from '@/components/ui/TooltipBase.vue'
+import ModalConfirm from '@/components/ui/ModalConfirm.vue'
 import { formatPrice } from '@/utils/formats'
 import { ShoppingCartIcon, TrashIcon } from '@heroicons/vue/24/solid'
 import { ShoppingCartIcon as ShoppingCartIconOutline } from '@heroicons/vue/24/outline'
 import { useStore } from 'vuex'
+import { ref } from 'vue'
 
 defineProps({
   type: String('cart' | 'favorites' | 'checkout'),
@@ -20,13 +22,26 @@ defineProps({
 
 const store = useStore()
 const emit = defineEmits(['remove', 'add-to-cart'])
+const isModalConfirmOpen = ref(false)
+const currentMovie = ref()
 
 function handleAddToCart(movie) {
   emit('add-to-cart', movie)
 }
 
-function handleRemove(movie) {
-  emit('remove', movie)
+function handleRemove() {
+  isModalConfirmOpen.value = false
+  emit('remove', currentMovie.value)
+}
+
+function handleOpenModalConfirm(movie) {
+  currentMovie.value = movie
+  isModalConfirmOpen.value = true
+}
+
+function handleCloseModalConfirm() {
+  currentMovie.value = null
+  isModalConfirmOpen.value = false
 }
 
 function movieIsAdded(movieId) {
@@ -66,7 +81,11 @@ function movieIsAdded(movieId) {
       </template>
 
       <TooltipBase content="Remover filme">
-        <button type="button" class="cursor-pointer" @click="handleRemove(movie)">
+        <button
+          type="button"
+          class="cursor-pointer"
+          @click="handleOpenModalConfirm(movie)"
+        >
           <TrashIcon class="size-5 fill-neutral-600" />
         </button>
       </TooltipBase>
@@ -78,4 +97,10 @@ function movieIsAdded(movieId) {
       Não há filmes adicionados.
     </div>
   </div>
+
+  <ModalConfirm
+    v-model="isModalConfirmOpen"
+    @confirm="handleRemove"
+    @cancel="handleCloseModalConfirm"
+  />
 </template>

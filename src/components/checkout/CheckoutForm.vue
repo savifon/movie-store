@@ -4,6 +4,7 @@ import InputBase from '@/components/forms/InputBase.vue'
 import FieldWrapper from '@/components/forms/FieldWrapper.vue'
 import CheckoutItems from '@/components/checkout/CheckoutItems.vue'
 import CheckoutConfirmed from '@/components/checkout/CheckoutConfirmed.vue'
+import ModalConfirm from '@/components/ui/ModalConfirm.vue'
 import * as yup from 'yup'
 import { useField, useForm, useIsFormValid } from 'vee-validate'
 import { validateCpf, validateName } from '@/utils/validators'
@@ -61,6 +62,7 @@ const { value: state } = useField('state')
 const store = useStore()
 const address_data = computed(() => store.getters['zipCode/address'])
 const confirmedCheckout = ref(false)
+const isModalConfirmOpen = ref(false)
 
 async function handleGetAddress() {
   if (errors.value.cep) return
@@ -74,7 +76,12 @@ function handleClearCart() {
   store.dispatch('cart/clearCart', cep.value)
 }
 
+function handleOpenModalConfirm() {
+  isModalConfirmOpen.value = true
+}
+
 const onSubmit = handleSubmit(async (values) => {
+  isModalConfirmOpen.value = false
   console.log(values)
   confirmedCheckout.value = true
 })
@@ -84,7 +91,7 @@ const onSubmit = handleSubmit(async (values) => {
   <div class="space-y-5 sm:space-y-10">
     <h3 class="text-3xl font-semibold">Finalizar Compra</h3>
 
-    <form @submit="onSubmit">
+    <form @submit.prevent="handleOpenModalConfirm">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-20">
         <div class="space-y-4">
           <FieldWrapper id="name" label="Nome completo *" :error="errors.name">
@@ -189,6 +196,12 @@ const onSubmit = handleSubmit(async (values) => {
       v-model="confirmedCheckout"
       :client-name="name"
       @close="handleClearCart"
+    />
+
+    <ModalConfirm
+      v-model="isModalConfirmOpen"
+      @confirm="onSubmit"
+      @cancel="isModalConfirmOpen = false"
     />
   </div>
 </template>
