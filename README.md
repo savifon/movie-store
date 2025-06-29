@@ -1,35 +1,63 @@
-# movie-store
+# Movie Store 🎬
 
-This template should help get you started developing with Vue 3 in Vite.
+A **Movie Store** é uma plataforma de e-commerce (fictício) voltada para a venda de filmes. Desenvolvida com Vue 3, Vuex e TailwindCSS, a aplicação consome dados em tempo real da API pública da TMDb e oferece funcionalidades completas como carrinho de compras, checkout e sistema de favoritos.
 
-## Recommended IDE Setup
+## 🔗 Acesso Online
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[➡️ Clique aqui para acessar o sistema](https://pendente.com)
 
-## Customize configuration
+## 🚀 Principais Funcionalidades
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Pesquisa de filmes
+- Carrinho de compras com persistência de estado
+- Sistema de favoritos por usuário
+- Checkout com formulário validado e máscara de campos
+- Modal de sucesso personalizado após finalização da compra
+- Integração com a API TMDb para dados reais de filmes
 
-## Project Setup
+## 🛠️ Principais Tecnologias Utilizadas
 
-```sh
+- Vue 3 + Composition API
+- Vue Router e Vuex
+- TailwindCSS
+- Axios
+- v-mask
+- Docker
+
+## 🖼️ Capturas de Tela
+
+- pendente
+
+## 📦 Instalação Local
+
+### Requisitos
+
+📄 **Importante:** É necessário criar o arquivo `.env` na raiz do projeto com base no arquivo `.env.example` e preencher sua chave da API TMDb.
+
+- Node.js 20+
+
+```bash
+# Clone o repositório
+https://github.com/savifon/movie-store.git
+
+# Acesse a pasta
+cd movie-store
+
+# Instale as dependências
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Rode o projeto
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Usando Docker
 
-```sh
-npm run build
-```
+📄 **Importante:** É necessário substituir `SUA_CHAVE_AQUI` no script abaixo pela sua chave da API TMDb.
 
-### Lint with [ESLint](https://eslint.org/)
+```bash
+# Build da imagem
+docker build --build-arg VITE_TMDB_API_KEY='SUA_CHAVE_AQUI' -t movie-store .
 
-```sh
-npm run lint
+# Execute o container na porta 3000
+docker run -p 3000:3000 --name movie-store movie-store
 ```
