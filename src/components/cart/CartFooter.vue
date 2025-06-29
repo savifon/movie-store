@@ -6,6 +6,12 @@ defineProps({
   cartTotalPrice: Number,
   cartCount: Number,
 })
+
+const emit = defineEmits(['close'])
+
+function handleCloseCart() {
+  emit('close')
+}
 </script>
 
 <template>
@@ -16,6 +22,12 @@ defineProps({
         {{ formatPrice(cartTotalPrice) }}
       </p>
     </div>
-    <ButtonBase text="Finalizar compra" :disabled="cartCount == 0" />
+    <RouterLink :to="cartCount > 0 ? '/checkout' : ''">
+      <ButtonBase
+        text="Finalizar compra"
+        :disabled="cartCount == 0"
+        @click="handleCloseCart"
+      />
+    </RouterLink>
   </div>
 </template>

@@ -6,7 +6,7 @@ import { ShoppingCartIcon as ShoppingCartIconOutline } from '@heroicons/vue/24/o
 import { useStore } from 'vuex'
 
 defineProps({
-  type: String('cart' | 'favorites'),
+  type: String('cart' | 'favorites' | 'checkout'),
   movies: Array({
     id: Number,
     backdrop_path: String,
@@ -35,17 +35,17 @@ function movieIsAdded(movieId) {
 </script>
 
 <template>
-  <div class="flex-1 text-sm divide-y divide-neutral-800">
+  <div class="flex-1 text-sm divide-y divide-neutral-700">
     <div
       v-for="movie in movies"
       :key="movie.id"
-      class="flex items-center gap-4 py-2 px-4"
+      :class="['flex items-center gap-4 py-2', type !== 'checkout' && 'px-4']"
     >
       <div class="flex-1 flex items-center gap-2">
         <img
           :src="`https://image.tmdb.org/t/p/w200${movie.backdrop_path}`"
           alt="Backdrop"
-          class="aspect-square w-10 rounded-md"
+          :class="['aspect-square  rounded-md', type !== 'checkout' ? 'w-10' : 'w-15']"
         />
         <p class="line-clamp-2">{{ movie.title }}</p>
       </div>

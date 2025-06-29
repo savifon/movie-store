@@ -36,6 +36,10 @@ function handleClearCart() {
     @clear="handleClearCart"
   >
     <SidebarItems :movies="cartItems" type="cart" @remove="handleRemoveFromCart" />
-    <CartFooter :cart-total-price="cartTotalPrice" :cart-count="cartCount" />
+    <CartFooter
+      :cart-total-price="cartTotalPrice"
+      :cart-count="cartCount"
+      @close="isOpen = false"
+    />
   </SidebarBase>
 </template>
