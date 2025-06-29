@@ -18,7 +18,6 @@ export default {
         commit('SET_ADDRESS', response.data)
       } catch (error) {
         dispatch('errors/setError', error.message, { root: true })
-        console.error('Erro ao tentar obter o endereço:', error.message)
       }
       dispatch('loading/stopLoading', null, { root: true })
     },
