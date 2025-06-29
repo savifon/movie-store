@@ -81,8 +81,9 @@ function handleOpenModalConfirm() {
 }
 
 const onSubmit = handleSubmit(async (values) => {
-  isModalConfirmOpen.value = false
   console.log(values)
+  store.dispatch('movies/setQuery', { query: '' })
+  isModalConfirmOpen.value = false
   confirmedCheckout.value = true
 })
 </script>

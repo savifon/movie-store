@@ -1,6 +1,6 @@
 <script setup lang="js">
 import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/vue/24/solid'
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useDebounce } from '@/composables/useDebounce'
 import CartContainer from '@/components/cart/CartContainer.vue'
@@ -9,7 +9,15 @@ import FavoritesContainer from '@/components/favorites/FavoritesContainer.vue'
 const store = useStore()
 const cartCount = computed(() => store.getters['cart/cartCount'])
 const currentPage = computed(() => store.getters['movies/currentPage'])
-const query = ref()
+const query = computed({
+  get() {
+    return store.getters['movies/query']
+  },
+  set(newValue) {
+    store.dispatch('movies/setQuery', { query: newValue })
+    store.dispatch('movies/setPage', { page: 0 })
+  },
+})
 
 function handleOpenCart() {
   store.dispatch('cart/openCart')
@@ -40,11 +48,6 @@ function handleSearchMovies() {
 }
 
 const debouncedSearch = useDebounce(handleSearchMovies)
-
-watch(query, () => {
-  store.dispatch('movies/setQuery', { query: query.value })
-  store.dispatch('movies/setPage', { page: 0 })
-})
 </script>
 
 <template>
