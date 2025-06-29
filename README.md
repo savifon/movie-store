@@ -4,7 +4,7 @@ A **Movie Store** é uma plataforma de e-commerce (fictício) voltada para a ven
 
 ## 🔗 Acesso Online
 
-[➡️ Clique aqui para acessar o sistema](https://pendente.com)
+[➡️ Clique aqui para acessar o sistema](https://dot-movie-store.netlify.app/)
 
 ## 🚀 Principais Funcionalidades
 
@@ -23,10 +23,6 @@ A **Movie Store** é uma plataforma de e-commerce (fictício) voltada para a ven
 - Axios
 - v-mask
 - Docker
-
-## 🖼️ Capturas de Tela
-
-- pendente
 
 ## 📦 Instalação Local
 
