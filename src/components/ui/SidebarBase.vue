@@ -1,5 +1,6 @@
 <script setup lang="js">
 import TooltipBase from '@/components/ui/TooltipBase.vue'
+import { watch } from 'vue'
 
 defineProps({
   title: String,
@@ -11,11 +12,20 @@ const isOpen = defineModel()
 
 function handleClear() {
   emit('clear')
+  closeSidebar()
 }
 
 function closeSidebar() {
   isOpen.value = false
 }
+
+watch(isOpen, () => {
+  if (isOpen.value) {
+    document.body.style.overflowY = 'hidden'
+  } else {
+    document.body.style.overflowY = 'auto'
+  }
+})
 </script>
 
 <template>

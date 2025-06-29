@@ -16,6 +16,9 @@ const router = createRouter({
       component: CheckoutView,
     },
   ],
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
+  },
 })
 
 export default router

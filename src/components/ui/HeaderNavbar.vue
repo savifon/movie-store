@@ -40,13 +40,21 @@ watch(query, () => {
 </script>
 
 <template>
-  <header>
-    <div class="grid grid-cols-3 items-center gap-4 py-3 px-8 bg-neutral-900">
-      <RouterLink to="/" class="w-fit text-lime-500 font-bold text-2xl tracking-wide">
-        MOVIE STORE
+  <header class="sticky top-0 z-10 shadow-lg shadow-neutral-950/50">
+    <div
+      class="flex sm:grid sm:grid-cols-3 items-center max-sm:justify-between gap-4 py-3 px-4 sm:px-8 bg-neutral-900"
+    >
+      <RouterLink
+        to="/"
+        class="w-fit text-lime-500 font-bold text-2xl tracking-wide select-none"
+      >
+        <span class="block sm:hidden">MS</span>
+        <span class="hidden sm:block">MOVIE STORE</span>
       </RouterLink>
 
-      <label class="flex items-center rounded-sm bg-neutral-800 border-2 border-lime-500">
+      <label
+        class="group flex items-center rounded-sm bg-neutral-800 border-2 border-neutral-800 focus-within:border-lime-500 transition-all"
+      >
         <input
           v-model="query"
           type="search"
@@ -54,10 +62,12 @@ watch(query, () => {
           placeholder="Pesquisa"
           @input="debouncedSearch"
         />
-        <MagnifyingGlassIcon class="fill-lime-300 size-8 mr-3" />
+        <MagnifyingGlassIcon
+          class="fill-neutral-600 group-focus-within:fill-lime-300 size-8 mr-3 transition-all"
+        />
       </label>
 
-      <div class="flex items-center justify-end gap-4">
+      <div class="flex items-center justify-end gap-2 sm:gap-4">
         <button class="group relative cursor-pointer" @click="handleOpenFavorites">
           <HeartIcon
             class="size-10 fill-lime-500 group-hover:fill-lime-300 transition-all"

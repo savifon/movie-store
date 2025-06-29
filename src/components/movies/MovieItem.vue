@@ -47,7 +47,10 @@ const movieBackdrop = computed(
 
 <template>
   <div
-    class="group flex flex-col bg-neutral-900 border border-lime-600 hover:border-lime-500 rounded-sm shadow-neutral-900 shadow-md hover:shadow-xl transition-all"
+    :class="[
+      'group flex flex-col bg-neutral-900 border border-lime-600 hover:border-lime-500 rounded-sm shadow-neutral-900 shadow-md hover:shadow-xl transition-all',
+      movieIsAdded && 'opacity-70',
+    ]"
   >
     <div class="relative rounded-t-sm overflow-hidden">
       <div
@@ -79,13 +82,15 @@ const movieBackdrop = computed(
       </div>
     </div>
     <div class="flex-1 text-center space-y-1 p-3">
-      <h3 class="text-lime-500 text-xl font-semibold line-clamp-2 leading-6 h-12">
+      <h3
+        class="text-lime-500 text-lg sm:text-xl font-semibold line-clamp-2 leading-6 h-12"
+      >
         {{ movie.title }}
       </h3>
       <div class="flex items-center justify-center gap-3">
         <div class="flex items-center gap-1">
-          <StarIcon class="size-5 fill-amber-400" />
-          <p class="text-lg font-semibold text-neutral-500">
+          <StarIcon class="size-4 sm:size-5 fill-amber-400" />
+          <p class="sm:text-lg font-semibold text-neutral-500">
             {{ Math.trunc(movie.vote_average) }}
           </p>
         </div>
@@ -93,7 +98,7 @@ const movieBackdrop = computed(
           <p class="text-neutral-500 text-sm cursor-default">{{ formattedGenres }}</p>
         </TooltipBase>
       </div>
-      <p class="text-lg">{{ formatPrice(movie.popularity) }}</p>
+      <p class="sm:text-lg">{{ formatPrice(movie.popularity) }}</p>
     </div>
     <ButtonBase
       :text="movieIsAdded ? 'Adicionado' : 'Adicionar'"

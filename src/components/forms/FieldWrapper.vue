@@ -8,10 +8,7 @@ defineProps({
 
 <template>
   <div>
-    <label
-      :for="id"
-      :class="['mb-1 flex', error ? 'text-red-400' : 'text-shadow-neutral-800']"
-    >
+    <label :for="id" :class="['mb-1 flex', error ? 'text-red-400' : '']">
       {{ label }}
     </label>
 

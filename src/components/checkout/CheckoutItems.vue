@@ -24,8 +24,10 @@ watch(cartCount, () => {
 </script>
 
 <template>
-  <div class="space-y-10">
-    <SidebarItems :movies="cartItems" type="checkout" @remove="handleRemoveFromCart" />
+  <div class="space-y-5 sm:space-y-10">
+    <div class="sm:max-h-[400px] sm:overflow-y-auto px-2 rounded-md bg-neutral-900">
+      <SidebarItems :movies="cartItems" type="checkout" @remove="handleRemoveFromCart" />
+    </div>
     <div class="flex items-center justify-between gap-2">
       <p class="">Total:</p>
       <p class="font-semibold text-lg">

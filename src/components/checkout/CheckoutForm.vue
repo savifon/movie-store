@@ -82,115 +82,117 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <h3 class="text-3xl font-semibold mb-10">Finalizar Compra</h3>
+  <div class="space-y-5 sm:space-y-10">
+    <h3 class="text-3xl font-semibold">Finalizar Compra</h3>
 
-  <form @submit="onSubmit">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
-      <div class="space-y-4">
-        <FieldWrapper id="name" label="Nome completo" :error="errors.name">
-          <InputBase
-            v-model="name"
-            name="name"
-            placeholder="Nome completo"
-            :has-error="!!errors.name"
-            required
-          />
-        </FieldWrapper>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FieldWrapper id="cpf" label="CPF" :error="errors.cpf">
+    <form @submit="onSubmit">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-20">
+        <div class="space-y-4">
+          <FieldWrapper id="name" label="Nome completo *" :error="errors.name">
             <InputBase
-              v-model="cpf"
-              name="cpf"
-              placeholder="CPF"
-              mask="###.###.###-##"
-              :has-error="!!errors.cpf"
+              v-model="name"
+              name="name"
+              placeholder="Nome completo"
+              :has-error="!!errors.name"
               required
             />
           </FieldWrapper>
-          <FieldWrapper id="phone" label="Celular" :error="errors.phone">
-            <InputBase
-              v-model="phone"
-              name="phone"
-              placeholder="Celular"
-              mask="(##) #####-####"
-              :has-error="!!errors.phone"
-              required
-            />
-          </FieldWrapper>
-        </div>
-        <FieldWrapper id="email" label="E-mail" :error="errors.email">
-          <InputBase
-            v-model="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            :has-error="!!errors.email"
-            required
-          />
-        </FieldWrapper>
-        <div class="grid grid-cols-1 sm:grid-cols-[30%_auto] gap-4">
-          <FieldWrapper id="cep" label="CEP" :error="errors.cep">
-            <InputBase
-              v-model="cep"
-              name="cep"
-              placeholder="CEP"
-              mask="#####-###"
-              :has-error="!!errors.cep"
-              required
-              @blur="handleGetAddress"
-            />
-          </FieldWrapper>
-          <FieldWrapper id="address" label="Endereço" :error="errors.address">
-            <InputBase
-              v-model="address"
-              name="address"
-              placeholder="Endereço"
-              :has-error="!!errors.address"
-              required
-            />
-          </FieldWrapper>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FieldWrapper id="city" label="Cidade" :error="errors.city">
-            <InputBase
-              v-model="city"
-              name="city"
-              placeholder="Cidade"
-              :has-error="!!errors.city"
-              required
-            />
-          </FieldWrapper>
-          <FieldWrapper id="state" label="Estado" :error="errors.state">
-            <InputBase
-              v-model="state"
-              name="state"
-              placeholder="Estado"
-              :has-error="!!errors.state"
-              required
-            />
-          </FieldWrapper>
-        </div>
-      </div>
-
-      <div class="space-y-10">
-        <div>
-          <div
-            class="grid grid-cols-[60px_auto_100px] items-center gap-2 text-sm text-neutral-400"
-          >
-            <p>Imagem</p>
-            <p class="flex-1">Título</p>
-            <p>Preço</p>
+          <div class="grid grid-cols-2 gap-4">
+            <FieldWrapper id="cpf" label="CPF *" :error="errors.cpf">
+              <InputBase
+                v-model="cpf"
+                name="cpf"
+                placeholder="CPF"
+                mask="###.###.###-##"
+                :has-error="!!errors.cpf"
+                required
+              />
+            </FieldWrapper>
+            <FieldWrapper id="phone" label="Celular *" :error="errors.phone">
+              <InputBase
+                v-model="phone"
+                name="phone"
+                placeholder="Celular"
+                mask="(##) #####-####"
+                :has-error="!!errors.phone"
+                required
+              />
+            </FieldWrapper>
           </div>
-          <CheckoutItems />
+          <FieldWrapper id="email" label="E-mail *" :error="errors.email">
+            <InputBase
+              v-model="email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              :has-error="!!errors.email"
+              required
+            />
+          </FieldWrapper>
+          <div class="grid grid-cols-1 sm:grid-cols-[30%_auto] gap-4">
+            <FieldWrapper id="cep" label="CEP *" :error="errors.cep">
+              <InputBase
+                v-model="cep"
+                name="cep"
+                placeholder="CEP"
+                mask="#####-###"
+                :has-error="!!errors.cep"
+                required
+                @blur="handleGetAddress"
+              />
+            </FieldWrapper>
+            <FieldWrapper id="address" label="Endereço *" :error="errors.address">
+              <InputBase
+                v-model="address"
+                name="address"
+                placeholder="Endereço"
+                :has-error="!!errors.address"
+                required
+              />
+            </FieldWrapper>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FieldWrapper id="city" label="Cidade *" :error="errors.city">
+              <InputBase
+                v-model="city"
+                name="city"
+                placeholder="Cidade"
+                :has-error="!!errors.city"
+                required
+              />
+            </FieldWrapper>
+            <FieldWrapper id="state" label="Estado *" :error="errors.state">
+              <InputBase
+                v-model="state"
+                name="state"
+                placeholder="Estado"
+                :has-error="!!errors.state"
+                required
+              />
+            </FieldWrapper>
+          </div>
         </div>
-        <ButtonBase type="submit" text="Finalizar Compra" :disabled="!isValid" />
-      </div>
-    </div>
-  </form>
 
-  <CheckoutConfirmed
-    v-model="confirmedCheckout"
-    :client-name="name"
-    @close="handleClearCart"
-  />
+        <div class="space-y-5 sm:space-y-10">
+          <div>
+            <div
+              class="grid grid-cols-[60px_auto_100px] items-center gap-2 text-sm text-neutral-400"
+            >
+              <p>Imagem</p>
+              <p class="flex-1">Título</p>
+              <p>Preço</p>
+            </div>
+            <CheckoutItems />
+          </div>
+          <ButtonBase type="submit" text="Finalizar Compra" :disabled="!isValid" />
+        </div>
+      </div>
+    </form>
+
+    <CheckoutConfirmed
+      v-model="confirmedCheckout"
+      :client-name="name"
+      @close="handleClearCart"
+    />
+  </div>
 </template>

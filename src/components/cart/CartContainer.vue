@@ -31,7 +31,7 @@ function handleClearCart() {
 <template>
   <SidebarBase
     v-model="isOpen"
-    title="Meu carrinho"
+    title="Meu Carrinho"
     :item-count="cartCount"
     @clear="handleClearCart"
   >

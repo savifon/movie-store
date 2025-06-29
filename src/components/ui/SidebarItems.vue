@@ -35,7 +35,9 @@ function movieIsAdded(movieId) {
 </script>
 
 <template>
-  <div class="flex-1 text-sm divide-y divide-neutral-700">
+  <div
+    class="flex-1 text-sm divide-y divide-neutral-700 overflow-y-auto overflow-x-hidden"
+  >
     <div
       v-for="movie in movies"
       :key="movie.id"

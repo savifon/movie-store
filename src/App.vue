@@ -21,7 +21,7 @@ const countLoading = computed(() => {
 <template>
   <LoadingOverlay v-if="countLoading > 0" />
   <HeaderNavbar />
-  <main class="w-10/12 py-10 mx-auto">
+  <main class="w-11/12 sm:w-10/12 py-6 sm:py-10 mx-auto">
     <RouterView />
   </main>
 </template>

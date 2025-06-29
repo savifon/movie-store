@@ -28,9 +28,7 @@ export default {
       const response = await tmdbService.getMovies(page)
       const movies = response.data.results
       commit('SET_MOVIES', { movies, isFirstRequest })
-      setTimeout(() => {
-        dispatch('loading/stopLoading', null, { root: true })
-      }, 2000)
+      dispatch('loading/stopLoading', null, { root: true })
     },
     async fetchMoviesByTitle({ dispatch, commit }, { query, isFirstRequest, page = 1 }) {
       dispatch('loading/startLoading', null, { root: true })

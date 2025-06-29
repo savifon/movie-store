@@ -1,10 +1,19 @@
 <script setup lang="js">
+import { watch } from 'vue'
+
 const isOpen = defineModel()
 
 const closeModal = () => {
   isOpen.value = false
-  document.body.style.overflow = 'unset'
 }
+
+watch(isOpen, () => {
+  if (isOpen.value) {
+    document.body.style.overflowY = 'hidden'
+  } else {
+    document.body.style.overflowY = 'auto'
+  }
+})
 </script>
 
 <template>

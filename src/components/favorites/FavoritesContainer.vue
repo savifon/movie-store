@@ -32,7 +32,7 @@ function handleAddToCart(movie) {
 <template>
   <SidebarBase
     v-model="isOpen"
-    title="Meu carrinho"
+    title="Meus Favoritos"
     :item-count="favorites.length"
     @clear="handleClearFavorites"
   >

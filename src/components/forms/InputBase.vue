@@ -26,7 +26,7 @@ defineExpose({ unmaskedModelValue })
     :required="required"
     @input="model = unmaskedModelValue"
     :class="[
-      'w-full py-2 px-3 bg-neutral-800 border-2  text-neutral-100 placeholder:text-neutral-500 focus:outline-none rounded-sm',
+      'w-full py-2 px-3 bg-neutral-700 focus:bg-neutral-900 border-2 text-neutral-100 placeholder:text-neutral-500 focus:outline-none rounded-sm transition-all',
       hasError ? 'border-red-400' : 'border-lime-900 focus:border-lime-600',
     ]"
   />
