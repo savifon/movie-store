@@ -5,32 +5,38 @@ export default {
   state: () => ({
     movies: [],
     genres: [],
-    movie: null,
+    query: '',
+    currentPage: 0,
   }),
   mutations: {
-    SET_MOVIES(state, movies) {
-      state.movies = movies
-    },
-    SET_MOVIE(state, movie) {
-      state.movie = movie
+    SET_MOVIES(state, { movies, isFirstRequest }) {
+      state.movies = isFirstRequest ? movies : [...state.movies, ...movies]
     },
     SET_GENRES(state, genres) {
       state.genres = genres
     },
+    SET_QUERY(state, query) {
+      state.query = query
+    },
+    SET_PAGE(state, page) {
+      state.currentPage = page
+    },
   },
   actions: {
-    async fetchMovies({ dispatch, commit }, { page = 1 } = {}) {
+    async fetchMovies({ dispatch, commit }, { isFirstRequest, page = 1 } = {}) {
       dispatch('loading/startLoading', null, { root: true })
       const response = await tmdbService.getMovies(page)
       const movies = response.data.results
-      commit('SET_MOVIES', movies)
-      dispatch('loading/stopLoading', null, { root: true })
+      commit('SET_MOVIES', { movies, isFirstRequest })
+      setTimeout(() => {
+        dispatch('loading/stopLoading', null, { root: true })
+      }, 2000)
     },
-    async fetchMoviesByTitle({ dispatch, commit }, { name, page = 1 }) {
+    async fetchMoviesByTitle({ dispatch, commit }, { query, isFirstRequest, page = 1 }) {
       dispatch('loading/startLoading', null, { root: true })
-      const response = await tmdbService.getMoviesByTitle(name, page)
+      const response = await tmdbService.getMoviesByTitle(query, page)
       const movies = response.data.results
-      commit('SET_MOVIES', movies)
+      commit('SET_MOVIES', { movies, isFirstRequest })
       dispatch('loading/stopLoading', null, { root: true })
     },
     async fetchGenres({ dispatch, commit }) {
@@ -40,10 +46,17 @@ export default {
       commit('SET_GENRES', genres)
       dispatch('loading/stopLoading', null, { root: true })
     },
+    async setQuery({ commit }, { query }) {
+      commit('SET_QUERY', query)
+    },
+    async setPage({ commit }, { page }) {
+      commit('SET_PAGE', page)
+    },
   },
   getters: {
     movies: (state) => state.movies,
-    movie: (state) => state.movie,
     genres: (state) => state.genres,
+    query: (state) => state.query,
+    currentPage: (state) => state.currentPage,
   },
 }

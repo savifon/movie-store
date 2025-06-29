@@ -2,11 +2,14 @@
 import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import MovieItem from '@/components/movies/MovieItem.vue'
+import { useInfiniteScroll } from '@/composables/useInfiniteScroll'
 
 const store = useStore()
-
 const genres = computed(() => store.getters['movies/genres'])
 const movies = computed(() => store.getters['movies/movies'])
+const query = computed(() => store.getters['movies/query'])
+const currentPage = computed(() => store.getters['movies/currentPage'])
+const infiniteScroll = useInfiniteScroll(handleGetMovies)
 
 function getMovieGenres(movie) {
   const movieGenresData = genres.value.filter((genre) =>
@@ -27,9 +30,25 @@ function handleToggleFavorite(movie) {
   store.dispatch('favorites/toggleFavorite', movie)
 }
 
+async function handleGetMovies(isFirstRequest = false) {
+  store.dispatch('movies/setPage', { page: currentPage.value + 1 })
+  if (!query.value) {
+    await store.dispatch('movies/fetchMovies', {
+      isFirstRequest,
+      page: currentPage.value,
+    })
+  } else {
+    await store.dispatch('movies/fetchMoviesByTitle', {
+      query: query.value,
+      isFirstRequest,
+      page: currentPage.value,
+    })
+  }
+}
+
 onMounted(async () => {
   await store.dispatch('movies/fetchGenres')
-  await store.dispatch('movies/fetchMovies', { page: 1 })
+  await handleGetMovies(true)
 })
 </script>
 
