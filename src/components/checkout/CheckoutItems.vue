@@ -29,12 +29,12 @@ watch(cartCount, () => {
 </script>
 
 <template>
-  <div class="space-y-5 sm:space-y-10 max-sm:pb-30">
-    <div class="sm:max-h-[400px] sm:overflow-y-auto px-2 rounded-md bg-neutral-900">
+  <div class="space-y-5 sm:space-y-5 max-sm:pb-30">
+    <div class="sm:max-h-[280px] sm:overflow-y-auto px-2 rounded-md bg-neutral-900">
       <SidebarItems :movies="cartItems" type="checkout" @remove="handleRemoveFromCart" />
     </div>
     <div
-      class="max-sm:fixed max-sm:left-0 max-sm:bottom-0 max-sm:w-full max-sm:bg-neutral-900 max-sm:p-3 max-sm:shadow-2xl max-sm:shadow-neutral-950 space-y-5 sm:space-y-10"
+      class="max-sm:fixed max-sm:left-0 max-sm:bottom-0 max-sm:w-full max-sm:bg-neutral-900 max-sm:p-3 max-sm:shadow-2xl max-sm:shadow-neutral-950 space-y-5 sm:space-y-5"
     >
       <div class="flex items-center justify-between gap-2">
         <p class="">Total:</p>
