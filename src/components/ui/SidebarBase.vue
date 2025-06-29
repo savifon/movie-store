@@ -1,5 +1,17 @@
 <script setup lang="js">
+import TooltipBase from '@/components/ui/TooltipBase.vue'
+
+defineProps({
+  title: String,
+  itemCount: Number,
+})
+
+const emit = defineEmits(['clear'])
 const isOpen = defineModel()
+
+function handleClear() {
+  emit('clear')
+}
 
 function closeSidebar() {
   isOpen.value = false
@@ -35,7 +47,24 @@ function closeSidebar() {
         v-if="isOpen"
         class="fixed top-0 right-0 h-full w-80 bg-neutral-900 border-l border-lime-500 shadow-2xl z-50 overflow-y-auto"
       >
-        <slot />
+        <div class="h-full flex flex-col">
+          <div
+            class="flex items-center justify-between py-3 px-4 border-b border-neutral-700 bg-neutral-800"
+          >
+            <h3 class="text-lg font-semibold">{{ title }}</h3>
+            <TooltipBase content="Remover todos os filmes">
+              <button
+                v-if="itemCount > 0"
+                class="cursor-pointer text-sm border-b border-lime-600 text-lime-600"
+                @click="handleClear"
+              >
+                Esvaziar
+              </button>
+            </TooltipBase>
+          </div>
+
+          <slot></slot>
+        </div>
       </div>
     </Transition>
   </div>

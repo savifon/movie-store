@@ -2,13 +2,18 @@
 import { HeartIcon, MagnifyingGlassIcon, ShoppingCartIcon } from '@heroicons/vue/24/solid'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import CartContent from '@/components/cart/CartContent.vue'
+import CartContainer from '@/components/cart/CartContainer.vue'
+import FavoritesContainer from '@/components/favorites/FavoritesContainer.vue'
 
 const store = useStore()
 const cartCount = computed(() => store.getters['cart/cartCount'])
 
 function handleOpenCart() {
   store.dispatch('cart/openCart')
+}
+
+function handleOpenFavorites() {
+  store.dispatch('favorites/openFavorites')
 }
 </script>
 
@@ -29,7 +34,7 @@ function handleOpenCart() {
       </label>
 
       <div class="flex items-center justify-end gap-4">
-        <button class="group relative cursor-pointer">
+        <button class="group relative cursor-pointer" @click="handleOpenFavorites">
           <HeartIcon
             class="size-10 fill-lime-500 group-hover:fill-lime-300 transition-all"
           />
@@ -48,5 +53,6 @@ function handleOpenCart() {
     </div>
   </header>
 
-  <CartContent />
+  <FavoritesContainer />
+  <CartContainer />
 </template>

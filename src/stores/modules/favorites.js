@@ -13,6 +13,7 @@ export default {
   namespaced: true,
   state: () => ({
     favorites: loadFromStorage(),
+    favoritesIsOpen: false,
   }),
   mutations: {
     TOGGLE_FAVORITE(state, movie) {
@@ -24,14 +25,34 @@ export default {
       }
       saveToStorage(state.favorites)
     },
+    CLEAR_FAVORITES(state) {
+      state.favorites = []
+      saveToStorage(state.favorites)
+    },
+    OPEN_FAVORITES(state) {
+      state.favoritesIsOpen = true
+    },
+    CLOSE_FAVORITES(state) {
+      state.favoritesIsOpen = false
+    },
   },
   actions: {
     toggleFavorite({ commit }, movie) {
       commit('TOGGLE_FAVORITE', movie)
     },
+    clearFavorites({ commit }) {
+      commit('CLEAR_FAVORITES')
+    },
+    openFavorites({ commit }) {
+      commit('OPEN_FAVORITES')
+    },
+    closeFavorites({ commit }) {
+      commit('CLOSE_FAVORITES')
+    },
   },
   getters: {
     favorites: (state) => state.favorites,
     isFavorite: (state) => (id) => state.favorites.some((p) => p.id === id),
+    favoritesIsOpen: (state) => state.favoritesIsOpen,
   },
 }
