@@ -12,7 +12,7 @@ defineProps({
 
 <template>
   <ModalBase v-model="isOpen">
-    <div class="flex flex-col items-center gap-5 sm:gap-10">
+    <div class="flex flex-col text-center items-center gap-5 sm:gap-10">
       <h3 class="text-3xl font-semibold text-lime-600">
         Obrigado {{ clientName.split(' ')[0] }}!
       </h3>

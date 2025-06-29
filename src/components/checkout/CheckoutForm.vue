@@ -1,7 +1,6 @@
 <script setup lang="js">
 import { useStore } from 'vuex'
 import InputBase from '@/components/forms/InputBase.vue'
-import ButtonBase from '@/components/forms/ButtonBase.vue'
 import FieldWrapper from '@/components/forms/FieldWrapper.vue'
 import CheckoutItems from '@/components/checkout/CheckoutItems.vue'
 import CheckoutConfirmed from '@/components/checkout/CheckoutConfirmed.vue'
@@ -173,18 +172,15 @@ const onSubmit = handleSubmit(async (values) => {
           </div>
         </div>
 
-        <div class="space-y-5 sm:space-y-10">
-          <div>
-            <div
-              class="grid grid-cols-[60px_auto_100px] items-center gap-2 text-sm text-neutral-400"
-            >
-              <p>Imagem</p>
-              <p class="flex-1">Título</p>
-              <p>Preço</p>
-            </div>
-            <CheckoutItems />
+        <div>
+          <div
+            class="grid grid-cols-[60px_auto_100px] items-center gap-2 text-sm text-neutral-400"
+          >
+            <p>Imagem</p>
+            <p class="flex-1">Título</p>
+            <p>Preço</p>
           </div>
-          <ButtonBase type="submit" text="Finalizar Compra" :disabled="!isValid" />
+          <CheckoutItems :form-is-valid="isValid" />
         </div>
       </div>
     </form>

@@ -40,7 +40,7 @@ watch(isOpen, () => {
       >
         <div
           v-if="isOpen"
-          class="bg-neutral-900 rounded-md shadow-xl max-w-md w-full max-h-screen overflow-y-auto p-10"
+          class="bg-neutral-900 rounded-md shadow-xl max-w-md w-10/12 max-h-screen overflow-y-auto p-10"
         >
           <slot></slot>
         </div>
