@@ -53,7 +53,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 xl:gap-10">
+  <div
+    v-if="movies.length > 0"
+    class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 xl:gap-10"
+  >
     <MovieItem
       v-for="movie in movies"
       :key="movie.id"
@@ -64,4 +67,5 @@ onMounted(async () => {
       @toggle-favorite="handleToggleFavorite"
     />
   </div>
+  <p v-else class="text-neutral-400">Não foi possível carregar os filmes.</p>
 </template>

@@ -13,8 +13,13 @@ export default {
   actions: {
     async fetchAddress({ dispatch, commit }, cep) {
       dispatch('loading/startLoading', null, { root: true })
-      const response = await viacep.getAddressByCep(cep)
-      commit('SET_ADDRESS', response.data)
+      try {
+        const response = await viacep.getAddressByCep(cep)
+        commit('SET_ADDRESS', response.data)
+      } catch (error) {
+        dispatch('errors/setError', error.message, { root: true })
+        console.error('Erro ao tentar obter o endereço:', error.message)
+      }
       dispatch('loading/stopLoading', null, { root: true })
     },
   },
