@@ -32,7 +32,7 @@ function handleToggleFavorite(movie) {
 
 async function handleGetMovies(isFirstRequest = false) {
   store.dispatch('movies/setPage', { page: currentPage.value + 1 })
-  if (!query.value) {
+  if (query.value === '') {
     await store.dispatch('movies/fetchMovies', {
       isFirstRequest,
       page: currentPage.value,

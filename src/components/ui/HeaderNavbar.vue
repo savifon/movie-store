@@ -20,8 +20,15 @@ function handleOpenFavorites() {
 }
 
 function handleSearchMovies() {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  })
+
+  store.dispatch('movies/setPage', { page: currentPage.value + 1 })
+
   if (query.value) {
-    store.dispatch('movies/setPage', { page: currentPage.value + 1 })
     store.dispatch('movies/fetchMoviesByTitle', {
       query: query.value,
       isFirstRequest: currentPage.value === 1,
@@ -35,6 +42,7 @@ function handleSearchMovies() {
 const debouncedSearch = useDebounce(handleSearchMovies)
 
 watch(query, () => {
+  store.dispatch('movies/setQuery', { query: query.value })
   store.dispatch('movies/setPage', { page: 0 })
 })
 </script>
