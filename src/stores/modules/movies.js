@@ -8,6 +8,7 @@ export default {
     genres: [],
     query: '',
     currentPage: 0,
+    totalPages: 0,
   }),
 
   mutations: {
@@ -23,15 +24,20 @@ export default {
     SET_PAGE(state, page) {
       state.currentPage = page
     },
+    SET_TOTAL_PAGES(state, total) {
+      state.totalPages = total
+    },
   },
 
   actions: {
-    async fetchMovies({ dispatch, commit }, { isFirstRequest, page = 1 } = {}) {
+    async fetchMovies({ dispatch, commit, state }, { isFirstRequest, page = 1 } = {}) {
+      if (state.totalPages <= state.currentPage && state.totalPages > 0) return
       dispatch('loading/startLoading', null, { root: true })
       try {
         const response = await tmdbService.getMovies(page)
         const movies = response.data.results
         commit('SET_MOVIES', { movies, isFirstRequest })
+        commit('SET_TOTAL_PAGES', response.data.total_pages)
       } catch (error) {
         commit('SET_MOVIES', { movies: [], isFirstRequest })
         dispatch('errors/setError', error.message, { root: true })
@@ -39,12 +45,17 @@ export default {
       dispatch('loading/stopLoading', null, { root: true })
     },
 
-    async fetchMoviesByTitle({ dispatch, commit }, { query, isFirstRequest, page = 1 }) {
+    async fetchMoviesByTitle(
+      { dispatch, commit, state },
+      { query, isFirstRequest, page = 1 },
+    ) {
+      if (state.totalPages <= state.currentPage && state.totalPages > 0) return
       dispatch('loading/startLoading', null, { root: true })
       try {
         const response = await tmdbService.getMoviesByTitle(query, page)
         const movies = response.data.results
         commit('SET_MOVIES', { movies, isFirstRequest })
+        commit('SET_TOTAL_PAGES', response.data.total_pages)
       } catch (error) {
         commit('SET_MOVIES', { movies: [], isFirstRequest })
         dispatch('errors/setError', error.message, { root: true })
@@ -70,6 +81,7 @@ export default {
     },
 
     async setPage({ commit }, { page }) {
+      if (page === 0) commit('SET_TOTAL_PAGES', 0)
       commit('SET_PAGE', page)
     },
   },
@@ -79,5 +91,6 @@ export default {
     genres: (state) => state.genres,
     query: (state) => state.query,
     currentPage: (state) => state.currentPage,
+    totalPages: (state) => state.totalPages,
   },
 }

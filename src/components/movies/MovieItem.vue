@@ -40,8 +40,10 @@ function handleToggleFavorite(movie) {
   emit('toggle-favorite', movie)
 }
 
-const movieBackdrop = computed(
-  () => `https://image.tmdb.org/t/p/w500${props.movie.backdrop_path}`,
+const movieBackdrop = computed(() =>
+  props.movie.backdrop_path
+    ? `https://image.tmdb.org/t/p/w500${props.movie.backdrop_path}`
+    : 'https://picsum.photos/id/870/200/300?grayscale&blur=2',
 )
 </script>
 
@@ -76,7 +78,7 @@ const movieBackdrop = computed(
       <div
         class="absolute bottom-0 pb-2 pt-4 w-full text-sm text-center bg-linear-to-t from-neutral-950/80 to-transparent"
       >
-        <span>
+        <span v-if="movie.release_date">
           {{ formatDate(movie.release_date) }}
         </span>
       </div>

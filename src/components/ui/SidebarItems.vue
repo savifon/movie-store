@@ -60,7 +60,11 @@ function movieIsAdded(movieId) {
     >
       <div class="flex-1 flex items-center gap-2">
         <img
-          :src="`https://image.tmdb.org/t/p/w200${movie.backdrop_path}`"
+          :src="
+            movie.backdrop_path
+              ? `https://image.tmdb.org/t/p/w200${movie.backdrop_path}`
+              : 'https://picsum.photos/id/870/200/300?grayscale&blur=2'
+          "
           alt="Backdrop"
           :class="['aspect-square  rounded-md', type !== 'checkout' ? 'w-10' : 'w-15']"
         />

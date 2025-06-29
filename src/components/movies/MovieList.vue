@@ -30,8 +30,8 @@ function handleToggleFavorite(movie) {
   store.dispatch('favorites/toggleFavorite', movie)
 }
 
-async function handleGetMovies(isFirstRequest = false) {
-  store.dispatch('movies/setPage', { page: currentPage.value + 1 })
+async function handleGetMovies(isFirstRequest = false, page = currentPage.value + 1) {
+  store.dispatch('movies/setPage', { page: page })
   if (query.value === '') {
     await store.dispatch('movies/fetchMovies', {
       isFirstRequest,
@@ -48,7 +48,7 @@ async function handleGetMovies(isFirstRequest = false) {
 
 onMounted(async () => {
   await store.dispatch('movies/fetchGenres')
-  await handleGetMovies(true)
+  await handleGetMovies(true, 1)
 })
 </script>
 
