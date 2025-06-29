@@ -60,16 +60,16 @@ const { value: city } = useField('city')
 const { value: state } = useField('state')
 
 const store = useStore()
-const address_data = computed(() => store.getters['zipCode/address'])
+const addressData = computed(() => store.getters['zipCode/address'])
 const confirmedCheckout = ref(false)
 const isModalConfirmOpen = ref(false)
 
 async function handleGetAddress() {
-  if (errors.value.cep) return
+  if (errors.value.cep || !cep.value) return
   await store.dispatch('zipCode/fetchAddress', cep.value)
-  address.value = address_data.value.logradouro
-  city.value = address_data.value.localidade
-  state.value = address_data.value.estado
+  address.value = addressData.value.logradouro
+  city.value = addressData.value.localidade
+  state.value = addressData.value.estado
 }
 
 function handleClearCart() {
@@ -83,6 +83,7 @@ function handleOpenModalConfirm() {
 const onSubmit = handleSubmit(async (values) => {
   console.log(values)
   store.dispatch('movies/setQuery', { query: '' })
+  store.dispatch('movies/setPage', { page: 0 })
   isModalConfirmOpen.value = false
   confirmedCheckout.value = true
 })
